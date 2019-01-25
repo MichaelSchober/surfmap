@@ -1,0 +1,40 @@
+<h1 class="font-italic">All my surfspots</h1>
+<br>
+<div>
+  <label>name
+    <input #surfspotNameId [(ngModel)]="surfspotName"/>
+  </label>
+  <label>latitude
+      <input #surfspotLatId [(ngModel)]="surfspotLat"/>
+  </label>
+  <label>longitude
+      <input #surfspotLngId [(ngModel)]="surfspotLng"/>
+  </label>
+  <button (click)="addSurfspot();">
+    Add
+  </button>
+</div>
+  
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Coordinates (Lat, Lng)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- <tr *ngFor="let spot of surfspots">
+        <th scope="row">{{spot.id}}</th>
+        <td>{{spot.name}}</td>
+        <td>{{spot.position}}</td>
+      </tr> -->
+      <tr *ngFor="let spot of surfspots | async">
+          <td>{{spot.properties.name}}</td> <!-- <input [(ngModel)]="spot.name" placeholer="spot.name"> -->
+          <td>{{spot.geometry.coordinates[0]}}, {{spot.geometry.coordinates[1]}}</td>
+          <td>
+            {{spot.key}}
+            <!-- <div (click)="deleteSurfspot()">-</div> -->
+          </td>
+        </tr>
+    </tbody>
+  </table>
