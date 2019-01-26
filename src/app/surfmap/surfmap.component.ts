@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { SurfspotService } from '../surfspot.service';
-import { FeatureCollection } from '../map';
+import { FeatureCollection, GeoJson } from '../map';
 import { Observable } from 'rxjs';
 import { AngularFirestoreCollection } from '@angular/fire/firestore';
 
@@ -19,7 +19,7 @@ export class SurfmapComponent implements OnInit {
   style = 'mapbox://styles/mapbox/outdoors-v9';
   lat = 30.506447;
   lng = -9.687892;
-  surfspots: AngularFirestoreCollection<any>;
+  surfspots: Observable<{}>;
   source: any;
 
   constructor(private surfspotService: SurfspotService) {
@@ -29,7 +29,7 @@ export class SurfmapComponent implements OnInit {
     mapboxgl.accessToken = environment.mapbox.accessToken;
 
     // BrowserPolicy.content.allowOriginForAll('blob:');
-    this.surfspots = this.surfspotService.getSurfspots();
+    this.surfspots = this.surfspotService.getSurfspotsWithId();
 
     this.initializeMap();
   }
@@ -92,8 +92,8 @@ export class SurfmapComponent implements OnInit {
    this.source = this.map.getSource('firebase');
 
    /// subscribe to realtime database and set data source
-   this.surfspotService.getSurfspots().subscribe(markers => {
-     const data = new FeatureCollection(markers);
+   this.surfspotService.getSurfspotsWithId().subscribe(markers => {
+     const data = new FeatureCollection(markers as GeoJson[]);
      this.source.setData(data);
    });
 

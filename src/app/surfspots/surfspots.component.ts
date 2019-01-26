@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Surfspot } from '../shared/surfspot';
 import { SurfspotService } from '../surfspot.service';
 import { AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-surfspots',
@@ -10,16 +11,13 @@ import { AngularFirestoreCollection } from '@angular/fire/firestore';
   styleUrls: ['./surfspots.component.styl']
 })
 export class SurfspotsComponent implements OnInit {
-  surfspots: AngularFirestoreCollection<any>;
+  surfspots: Observable<{}[]>;
   surfspotName: string;
   surfspotLat: number;
   surfspotLng: number;
 
   constructor(private surfspotService: SurfspotService) {
-    this.surfspots = this.surfspotService.getSurfspots();
-    // this.surfspots.snapshotChanges().subscribe((e) => {
-    //   console.log(e);
-    // });
+    this.surfspots = this.surfspotService.getSurfspotsWithId();
   }
 
   addSurfspot(name: string, coordinates: number[]): void  {

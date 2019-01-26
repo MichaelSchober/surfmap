@@ -6,6 +6,8 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import * as mapboxgl from '../../node_modules/mapbox-gl/dist/mapbox-gl';
 import { environment } from '../environments/environment';
 import { GeoJson } from 'app/map';
+import { map } from 'rxjs/operators';
+import { Surfspot } from 'app/shared/surfspot';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -19,16 +21,36 @@ export class SurfspotService {
     // console.log(this.db.firestore.app.)
   }
 
-  getSurfspots(): any {
-    this.printAllSurfspots();
-    return this.db.collection('data').valueChanges();
+  getSurfspotsWithId(): Observable<{}[]> {
+    // this.printAllSurfspots();
+
+    this.db.collection('data').snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Surfspot;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    ).subscribe((x) => {
+      console.log(x);
+    });
+
+    return this.db.collection('data').snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Surfspot;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+    
+    // return this.db.collection('data').valueChanges();
+    // return this.db.collection('data').snapshotChanges();
   }
 
   printAllSurfspots(): void {
     const docRef = this.db.collection('data').get().toPromise().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
           // doc.data() is never undefined for query doc snapshots
-          // console.log(doc.id, ' => ', doc.data());
+          console.log(doc.id, ' => ', doc.data());
       });
     });
   }
