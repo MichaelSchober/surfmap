@@ -25,7 +25,7 @@ export class SurfspotsComponent implements OnInit {
       'type': 'Feature',
       'geometry': {
         'type': 'Point',
-        'coordinates': [this.surfspotLng, this.surfspotLat]
+        'coordinates': [this.surfspotLat, this.surfspotLng]
       },
       'properties': {
         'name': this.surfspotName
@@ -34,6 +34,10 @@ export class SurfspotsComponent implements OnInit {
     this.surfspotName = '';
     this.surfspotLat = 0;
     this.surfspotLng = 0;
+  }
+
+  deleteSurfspot(id: string) {
+    this.surfspotService.deleteSurfspot(id);
   }
 
   ngOnInit() {

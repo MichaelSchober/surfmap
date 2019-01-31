@@ -10,12 +10,14 @@ import { AppComponent } from './app.component';
 import { SurfspotsComponent } from './surfspots/surfspots.component';
 import { SurfmapComponent } from './surfmap/surfmap.component';
 import { SurfspotService } from '../app/surfspot.service';
+import { SurfspotDetailComponent } from './surfspot-detail/surfspot-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SurfspotsComponent,
-    SurfmapComponent
+    SurfmapComponent,
+    SurfspotDetailComponent
   ],
   imports: [
     BrowserModule,

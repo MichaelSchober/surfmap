@@ -1,0 +1,13 @@
+<p> surfspot detail </p>
+<a (click)="goBack()">< Back</a>
+<br>
+<p *ngIf="surfspot">
+  Id: {{surfspot.id}} <br>
+  Name: {{surfspot.properties.name}} <br>
+  Latitude: {{surfspot.geometry.coordinates[0]}}<br>
+  Latitude: {{surfspot.geometry.coordinates[1]}}<br>
+</p>
+
+
+
+

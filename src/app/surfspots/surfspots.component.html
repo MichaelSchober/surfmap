@@ -23,18 +23,17 @@
       </tr>
     </thead>
     <tbody>
-      <!-- <tr *ngFor="let spot of surfspots">
-        <th scope="row">{{spot.id}}</th>
-        <td>{{spot.name}}</td>
-        <td>{{spot.position}}</td>
-      </tr> -->
       <tr *ngFor="let spot of surfspots | async">
-          <td>{{spot.properties.name}}</td> <!-- <input [(ngModel)]="spot.name" placeholer="spot.name"> -->
-          <td>{{spot.geometry.coordinates[0]}}, {{spot.geometry.coordinates[1]}}</td>
-          <td>
-            {{spot.id}}
-            <!-- <div (click)="deleteSurfspot()">-</div> -->
-          </td>
-        </tr>
+        <!-- <td><input [(ngModel)]="spot.properties.name" placeholer="spot.properties.name"></td> -->
+        <td>
+          <!-- {{spot.properties.name}} -->
+          <a routerLink="/surfspot/{{spot.id}}">{{spot.properties.name}}</a>
+          <!-- <a [routerLink]="['/surfspot/spot.id', {surfspot: spot}]">{{spot.properties.name}}</a> -->
+        </td>
+        <td>{{spot.geometry.coordinates[0]}}, {{spot.geometry.coordinates[1]}}</td>
+        <td>
+          <button (click)="deleteSurfspot(spot.id)">-</button>
+        </td>
+      </tr>
     </tbody>
   </table>

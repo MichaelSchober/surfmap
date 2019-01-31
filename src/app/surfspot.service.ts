@@ -17,23 +17,21 @@ export class SurfspotService {
 
   constructor(private db: AngularFirestore) {
     mapboxgl.accessToken = environment.mapbox.accessToken;
-    // console.log(this.db.collection('surfspots').valueChanges());
-    // console.log(this.db.firestore.app.)
   }
 
   getSurfspotsWithId(): Observable<{}[]> {
     // this.printAllSurfspots();
 
-    this.db.collection('data').snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Surfspot;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      }))
-    ).subscribe((x) => {
-      console.log(x);
-    });
-
+    // this.db.collection('data').snapshotChanges().pipe(
+    //   map(actions => actions.map(a => {
+    //     const data = a.payload.doc.data() as Surfspot;
+    //     const id = a.payload.doc.id;
+    //     return { id, ...data };
+    //   }))
+    // ).subscribe((x) => {
+    //   console.log(x);
+    // });
+    // return normal data with id
     return this.db.collection('data').snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Surfspot;
@@ -41,9 +39,6 @@ export class SurfspotService {
         return { id, ...data };
       }))
     );
-    
-    // return this.db.collection('data').valueChanges();
-    // return this.db.collection('data').snapshotChanges();
   }
 
   printAllSurfspots(): void {
@@ -55,13 +50,21 @@ export class SurfspotService {
     });
   }
 
+  getSurfspot($key: string): Observable<Surfspot> {
+    // console.log(this.db.collection('data').doc<Surfspot>($key));
+    // return this.db.collection('data').doc<Surfspot>($key).valueChanges();
+    return this.db.collection('data').doc<Surfspot>($key).snapshotChanges().pipe(
+      map(action => {
+        const data = action.payload.data() as Surfspot;
+        const id = action.payload.id;
+        return {  id, ...data };
+      }));
+  }
+
   createSurfspot(data: GeoJson) {
     return this.db.collection('data').add(data);
   }
 
-  // removeMarker($key: string) {
-  //   return this.db.object('/markers/' + $key).remove()
-  // }
   deleteSurfspot($key: string) {
     this.db.collection('data').doc($key).delete();
     // return this.db.object('/markers/' + $key).remove()
