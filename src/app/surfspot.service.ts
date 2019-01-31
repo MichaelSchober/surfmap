@@ -19,7 +19,7 @@ export class SurfspotService {
     mapboxgl.accessToken = environment.mapbox.accessToken;
   }
 
-  getSurfspotsWithId(): Observable<{}[]> {
+  getSurfspotsWithId(): Observable<Surfspot[]> {
     // this.printAllSurfspots();
 
     // this.db.collection('data').snapshotChanges().pipe(
@@ -34,9 +34,9 @@ export class SurfspotService {
     // return normal data with id
     return this.db.collection('data').snapshotChanges().pipe(
       map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Surfspot;
+        const data = a.payload.doc.data();
         const id = a.payload.doc.id;
-        return { id, ...data };
+        return { id, ...data } as Surfspot;
       }))
     );
   }
@@ -55,7 +55,7 @@ export class SurfspotService {
     // return this.db.collection('data').doc<Surfspot>($key).valueChanges();
     return this.db.collection('data').doc<Surfspot>($key).snapshotChanges().pipe(
       map(action => {
-        const data = action.payload.data() as Surfspot;
+        const data = action.payload.data();
         const id = action.payload.id;
         return {  id, ...data };
       }));
@@ -67,6 +67,5 @@ export class SurfspotService {
 
   deleteSurfspot($key: string) {
     this.db.collection('data').doc($key).delete();
-    // return this.db.object('/markers/' + $key).remove()
   }
 }

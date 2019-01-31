@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./surfspots.component.styl']
 })
 export class SurfspotsComponent implements OnInit {
-  surfspots: Observable<{}[]>;
+  surfspots: Observable<Surfspot[]>;
   surfspotName: string;
   surfspotLat: number;
   surfspotLng: number;

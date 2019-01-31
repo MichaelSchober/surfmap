@@ -3,6 +3,7 @@ import { Surfspot } from 'app/shared/surfspot';
 import { SurfspotService } from 'app/surfspot.service';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { GeoJson } from 'app/shared/interfaces';
 
 @Component({
   selector: 'app-surfspot-detail',
@@ -27,7 +28,6 @@ export class SurfspotDetailComponent implements OnInit {
     this.surfspotService.getSurfspot(id)
       .subscribe((surfspot) => {
         this.surfspot = surfspot;
-        console.log(surfspot);
       });
   }
 
