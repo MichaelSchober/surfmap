@@ -11,6 +11,7 @@ import { SurfspotsComponent } from './surfspots/surfspots.component';
 import { SurfmapComponent } from './surfmap/surfmap.component';
 import { SurfspotService } from '../app/surfspot.service';
 import { SurfspotDetailComponent } from './surfspot-detail/surfspot-detail.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { SurfspotDetailComponent } from './surfspot-detail/surfspot-detail.compo
     AppRoutingModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase, 'surfmap'),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    HttpClientModule
   ],
   providers: [ ],
   bootstrap: [AppComponent]
